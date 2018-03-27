@@ -1,0 +1,38 @@
+.bg-light-blue {
+	background-color: #e3f2fd;
+}
+
+nav {
+	border-radius: 5px;
+}
+
+btn-primary {
+	background-color: #e3f2fd;
+}
+
+.img-main {
+	width: 100%;
+}
+
+.book-list-item {
+	cursor: pointer;
+}
+
+.book-list-item:hover {
+	background-color: #FAFAFA;
+}
+
+.ReactModal__Content {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transition: opacity 400ms;
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+  transition: opacity 400ms;
+}
