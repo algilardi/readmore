@@ -5,7 +5,10 @@ const bcrypt = require('bcrypt-nodejs');
 const userSchema = new Schema({
 	email: { type: String, unique: true, lowercase: true },
 	name: String,
-	password: String
+	password: String,
+	completed: [{title: String, volumeID: String, rating: String}],
+	reading: [{title: String, volumeID: String, rating: String}],
+	planToRead: [{title: String, volumeID: String, rating: String}]
 });
 
 // encrypt password

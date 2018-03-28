@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+
 import { loginUser } from '../../actions';
 
 class Login extends Component {
-	handleFormSubmit({ email, password }) {
-		if (!this.props.errorMessage) {
-			this.props.loginUser({email, password}, this.props.closeModal);
-		}
+	handleFormSubmit(values) {
+		this.props.loginUser(values, this.props.closeModal);
 	}
 
 	renderField(field) {
 		return (
 			<div className="form-group">
 				<input
-					className="form-control form-control-danger"
+					className="form-control"
 					type={field.type}
 					placeholder={field.placeholder}
 					{...field.input}
@@ -61,7 +60,7 @@ function mapStateToProps(state) {
 }
 
 export default reduxForm({
-		form: 'LoginForm'
+		form: 'login'
 })(
 	connect(mapStateToProps, { loginUser })(Login)
 );

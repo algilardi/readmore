@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
-import { clearErrors, logoutUser, renderAbout, renderTopList } from '../actions';
+import { clearErrors, logoutUser, renderAbout, renderTopList, renderUserPage } from '../actions';
 
 import Login from './auth/Login';
 import Register from './auth/Register';
@@ -43,7 +43,7 @@ class UserHeader extends Component {
 		if (this.props.authenticated) {
 			return [
 				<li className="nav-item" key={0}>
-					<span className="navbar-text mr-4">Hi, {this.props.name}</span>
+					<span className="navbar-text mr-4">Hi, <span className="user-link">{this.props.name}</span></span>
 				</li>,
 				<li className="nav-item" key={1}>
 					<button className="btn btn-link" onClick={this.props.logoutUser}>Log Out</button>
@@ -65,7 +65,7 @@ class UserHeader extends Component {
 	render() {
 		let modalComponent, modalStyle;
 		if (this.state.modalType === 'register') {
-			modalComponent = <Register closeModal={this.closeModal.bind(this)}/>;
+			modalComponent = <Register closeModal={this.closeModal}/>;
 			modalStyle = {
 				content : {
 					margin: 'auto',
@@ -75,7 +75,7 @@ class UserHeader extends Component {
 			};
 		}
 		else {
-			modalComponent = <Login closeModal={this.closeModal.bind(this)}/>;
+			modalComponent = <Login closeModal={this.closeModal}/>;
 			modalStyle = {
 				content : {
 					margin: 'auto',
@@ -85,6 +85,9 @@ class UserHeader extends Component {
 			};
 		}
 
+		let userPageLink = this.props.authenticated ? <li className="btn btn-link" onClick={this.props.renderUserPage}>My Books</li> : '';
+
+
 
 		return (
 			<div>
@@ -93,6 +96,7 @@ class UserHeader extends Component {
 					<div className="navbar navbar-collapse">
 						<ul className="navbar-nav ml-auto">
 							<li className="btn btn-link" onClick={this.props.renderTopList}>Top Books</li>
+							{userPageLink}
 							<li className="btn btn-link" onClick={this.props.renderAbout}>About</li>
 						</ul>
 						<ul className="navbar-nav ml-auto">
@@ -120,4 +124,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps, { clearErrors, logoutUser, renderAbout, renderTopList })(UserHeader);
+export default connect(mapStateToProps, { clearErrors, logoutUser, renderAbout, renderTopList, renderUserPage })(UserHeader);

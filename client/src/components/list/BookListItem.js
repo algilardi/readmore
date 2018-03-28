@@ -11,8 +11,6 @@ class BookListItem extends Component {
     render() {
         let { book } = this.props;
         let { title } = book.volumeInfo;
-        // if (title.length > 40)
-        // title = title.substring(0, 40) + '...';
 
         let imgSrc = generateImageLink(book.volumeInfo);
 

@@ -23,11 +23,13 @@ class BookList extends Component {
 
     render() {
         return (
-            <div className="container">
-                <BookListSearch />
-                <ul className="list-group list-group-flush">
-                    {this.renderList()}
-                </ul>
+            <div className="container card">
+                <div className="card-body">
+                    <BookListSearch />
+                    <ul className="list-group list-group-flush">
+                        {this.renderList()}
+                    </ul>
+                </div>
             </div>
         );
     }

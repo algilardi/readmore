@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../actions';
 
 class Register extends Component {
-	handleSubmit(values) {
+	handleFormSubmit(values) {
+		console.log(values);
 		this.props.registerUser(values, this.props.closeModal);
 	}
 
@@ -13,7 +14,7 @@ class Register extends Component {
 		return (
 			<div className="form-group">
 				<input
-					className="form-control form-control-danger"
+					className="form-control"
 					type={field.type}
 					placeholder={field.placeholder}
 					{...field.input}
@@ -35,7 +36,7 @@ class Register extends Component {
 		const { handleSubmit } = this.props;
 
 		return (
-			<form onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+			<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 				<Field
 					placeholder="Email"
 					name="email"
@@ -67,7 +68,7 @@ class Register extends Component {
 	}
 }
 
-// Doesn't work as nicely with react-modalType
+// Doesn't work as nicely with react-modal
 /*
 function validate(values) {
 	const errors = {};

@@ -21,28 +21,30 @@ class BookView extends Component {
         let dbTitle = book.subtitle ? book.title + ' ' + book.subtitle : book.title ;
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-4">
-                        <img className="img-fluid img-main" src={imgSrc}></img>
+            <div className="container card">
+                <div className="card-body">
+                    <div className="row">
+                        <div className="col-sm-4">
+                            <img className="img-fluid img-main" src={imgSrc}></img>
+                        </div>
+                        <div className="col-sm-8">
+                            <AddBook title={dbTitle}/>
+                            <h4 className="pt-2">{book.title}</h4>
+                            <h5 className="text-muted">{book.subtitle}</h5>
+                            <span className="pt-2">{authors}</span>
+                            <dl className="row mt-4">
+                                <dt className="col-sm-3">Categories</dt>
+                                <dl className="col-sm-9">{categories}</dl>
+                                <dt className="col-sm-3">Year</dt>
+                                <dl className="col-sm-9">{year}</dl>
+                                <dt className="col-sm-3">Length</dt>
+                                <dl className="col-sm-9">{length}</dl>
+                            </dl>
+                        </div>
                     </div>
-                    <div className="col-sm-8">
-                        <AddBook title={dbTitle}/> {purchase}
-                        <h4>{book.title}</h4>
-                        <h5 className="text-muted">{book.subtitle}</h5>
-                        <span className="pt-2">{authors}</span>
-                        <dl className="row mt-4">
-                            <dt className="col-sm-3">Categories</dt>
-                            <dl className="col-sm-9">{categories}</dl>
-                            <dt className="col-sm-3">Year</dt>
-                            <dl className="col-sm-9">{year}</dl>
-                            <dt className="col-sm-3">Length</dt>
-                            <dl className="col-sm-9">{length}</dl>
-                        </dl>
+                    <div className="row mt-3">
+                        <p className="lead">{book.description}</p>
                     </div>
-                </div>
-                <div className="row mt-3">
-                    <p className="lead">{book.description}</p>
                 </div>
             </div>
         );

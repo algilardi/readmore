@@ -9,7 +9,14 @@ function tokenForUser(user) {
 
 exports.login = (req, res, next) => {
 	// user already authed, signin and give token
-	res.send({ token: tokenForUser(req.user), name: req.user.name, email: req.user.email });
+	res.send({
+		token: tokenForUser(req.user),
+		name: req.user.name,
+		email: req.user.email,
+	 	completed: req.user.completed || [],
+		reading: req.user.reading || [],
+		planToRead: req.user.planToRead || []
+	});
 };
 
 exports.register = (req, res, next) => {
@@ -31,18 +38,20 @@ exports.register = (req, res, next) => {
 			return res.status(422).send({error: 'Please fill out all fields'});
 		}
 		if (!emailRe.test(email)) {
-			return res.status(422).send({ error: 'Please enter a valid email'});
+			return res.status(422).send({ error: 'Invalid email'});
 		}
 		if (password !== confirmPassword) {
-			return res.status(422).send({ error: 'Passwords do not match'});
+			return res.status(422).send({ error: 'Password mismatch'});
 		}
-
 
 		// Otherwise create and save user record in DB
 		const newUser = new User({
 			email: email,
 			name: name,
-			password: password
+			password: password,
+			completed: [],
+			reading: [],
+			planToRead: []
 		});
 
 		newUser.save( err => {

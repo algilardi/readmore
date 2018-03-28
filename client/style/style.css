@@ -2,12 +2,22 @@
 	background-color: #e3f2fd;
 }
 
+.container-fluid {
+	width: 95%
+}
+
 nav {
 	border-radius: 5px;
 }
 
-btn-primary {
-	background-color: #e3f2fd;
+.btn-user-category:hover {
+	cursor: default !important;
+	color: #337CF6;
+	background-color: inherit;
+}
+
+.selected {
+	color: #222529;
 }
 
 .img-main {
@@ -20,6 +30,10 @@ btn-primary {
 
 .book-list-item:hover {
 	background-color: #FAFAFA;
+}
+
+.book-tr {
+	cursor: pointer;
 }
 
 .ReactModal__Content {
