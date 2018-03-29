@@ -8,7 +8,6 @@ class BookListSearch extends Component {
     constructor(props) {
         super(props);
 
-        this.handleSearch = _.debounce(this.handleSearch, 100);
         this.state = {term:''};
     }
 

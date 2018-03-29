@@ -14,7 +14,6 @@
 ## Add Book Form
 
 ## Book DB
-*	Entry editing (changing status, updating rating)
 *	Adding a date finished entry, to track books read month to month, year to year
 
 ## User Page

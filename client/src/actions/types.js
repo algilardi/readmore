@@ -3,6 +3,7 @@ export const UNAUTH_USER = 'unath_user';
 export const AUTH_ERROR = 'auth_error';
 export const CLEAR_ERRORS = 'clear_errors';
 export const UPDATE_USER = 'update_user';
+export const REMOVE_BOOK_FROM_STATE = 'remove_book';
 
 export const BOOK_SEARCH = 'book_search';
 export const BOOK_EMPTY = 'book_empty';

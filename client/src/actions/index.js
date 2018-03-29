@@ -2,11 +2,12 @@ import axios from 'axios';
 
 import placeholderImg from '../images/book-placeholder.jpg';
 
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, CLEAR_ERRORS, UPDATE_USER,
+import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, CLEAR_ERRORS, UPDATE_USER, REMOVE_BOOK_FROM_STATE,
 		ABOUT, TOPLIST, USER_PAGE,
 		BOOK_SEARCH, BOOK_EMPTY, BOOK_ERROR, BOOK_SELECT, BOOK_SELECT_API} from './types';
 
-import { SIZE_LARGE } from '../constants';
+import { COMPLETED, READING, PLAN_TO_READ } from '../constants';
+
 
 const API_URL = 'http://localhost:3090';
 const BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes';
@@ -125,6 +126,20 @@ export function selectBookAPI(book) {
 export function addBook({ volumeID, title, email, status, rating }) {
 	axios.post(`${API_URL}/addBook`, { volumeID, title, email, status, rating });
 	return {type: UPDATE_USER, payload: {status, volumeID, title, rating}};
+}
+
+export function updateBook({ volumeID, title}, email, status, rating, activeList, oldRating) {
+	axios.post(`${API_URL}/updateBook`, { volumeID, title, email, status, rating, activeList, oldRating } );
+	return {type: UPDATE_USER, payload: {status, volumeID, title, rating}};
+}
+
+export function removeBookFromState({volumeID}, activeList) {
+	console.log(volumeID, activeList);
+	console.log(REMOVE_BOOK_FROM_STATE);
+	return {type: REMOVE_BOOK_FROM_STATE, payload: {
+		volumeID: volumeID,
+		activeList: activeList
+	}};
 }
 
 // View State Changing

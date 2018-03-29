@@ -17,18 +17,24 @@ userSchema.pre('save', function(next) {
 	// get access to instance of user model
 	const user = this;
 
-	// generate salt then run callback
-	bcrypt.genSalt(10, (err, salt) => {
-		if (err) { return next(err); }
-
-		// hash (encrypt) password with salt
-		bcrypt.hash(user.password, salt, null, (err, hash) => {
-			if (err) { return next(err); }
-
-			// overwrite plain text password
-			user.password = hash;
+	userModel.findOne({email: user.email},  (err, foundUser) => {
+		if (foundUser)
 			next();
-		});
+		else {
+			// if new user, generate salt then run callback
+			bcrypt.genSalt(10, (err, salt) => {
+				if (err) { return next(err); }
+
+				// hash (encrypt) password with salt
+				bcrypt.hash(user.password, salt, null, (err, hash) => {
+					if (err) { return next(err); }
+
+					// overwrite plain text password
+					user.password = hash;
+					next();
+				});
+			});
+		}
 	});
 });
 
@@ -40,4 +46,5 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
 	});
 };
 
-module.exports = mongoose.model('user', userSchema);
+let userModel = mongoose.model('user', userSchema);
+module.exports = userModel;

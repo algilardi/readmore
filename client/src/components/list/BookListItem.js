@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import { selectBook, generateImageLink } from '../../actions';
 
 class BookListItem extends Component {
-    handleClick() {
-        this.props.selectBook(this.props.book);
-    }
-
     render() {
         let { book } = this.props;
         let { title } = book.volumeInfo;
@@ -15,7 +11,7 @@ class BookListItem extends Component {
         let imgSrc = generateImageLink(book.volumeInfo);
 
         return (
-                <div className="container-fluid" onClick={this.handleClick.bind(this)}>
+                <div className="container-fluid">
                     <dl className="row">
                         <dt className="col-sm-3">
                             <img className="img-fluid" src={imgSrc}></img>
@@ -27,4 +23,4 @@ class BookListItem extends Component {
     }
 }
 
-export default connect(null, { selectBook, generateImageLink })(BookListItem);
+export default connect(null, { generateImageLink })(BookListItem);

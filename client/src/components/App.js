@@ -14,7 +14,7 @@ class App extends Component {
                         <div className="col-md-7">
                             <MainView />
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-5 mb-2">
                             <BookList />
                         </div>
                     </div>

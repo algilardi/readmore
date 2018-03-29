@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { selectBookAPI } from '../../actions';
 import { COMPLETED, READING, PLAN_TO_READ } from '../../constants';
 
+import EditBook from './EditBook';
+
 class UserPage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            activeClass: COMPLETED,
+            activeList: COMPLETED,
             completedBtnClass: 'btn-outline-primary btn-user-category',
             readingBtnClass: 'btn-link',
             planToReadBtnClass: 'btn-link'
@@ -17,9 +19,9 @@ class UserPage extends Component {
     }
 
     completedClick(){
-        if(this.state.activeClass !== COMPLETED){
+        if(this.state.activeList !== COMPLETED){
             this.setState({
-                activeClass: COMPLETED,
+                activeList: COMPLETED,
                 completedBtnClass: 'btn-outline-primary btn-user-category',
                 readingBtnClass: 'btn-link',
                 planToReadBtnClass: 'btn-link'
@@ -28,9 +30,9 @@ class UserPage extends Component {
     }
 
     readingClick(){
-        if(this.state.activeClass !== READING){
+        if(this.state.activeList !== READING){
             this.setState({
-                activeClass: READING,
+                activeList: READING,
                 completedBtnClass: 'btn-link',
                 readingBtnClass: 'btn-outline-primary btn-user-category',
                 planToReadBtnClass: 'btn-link'
@@ -39,9 +41,9 @@ class UserPage extends Component {
     }
 
     planToReadClick(){
-        if(this.state.activeClass !== PLAN_TO_READ){
+        if(this.state.activeList !== PLAN_TO_READ){
             this.setState({
-                activeClass: PLAN_TO_READ,
+                activeList: PLAN_TO_READ,
                 completedBtnClass: 'btn-link',
                 readingBtnClass: 'btn-link',
                 planToReadBtnClass: 'btn-outline-primary btn-user-category'
@@ -57,9 +59,9 @@ class UserPage extends Component {
         let {completed, reading, planToRead} = this.props;
 
         let books;
-        if (this.state.activeClass === COMPLETED)
+        if (this.state.activeList === COMPLETED)
             books = completed;
-        else if (this.state.activeClass === READING)
+        else if (this.state.activeList === READING)
             books = reading;
         else
             books = planToRead;
@@ -71,6 +73,7 @@ class UserPage extends Component {
                 <tr onClick={this.trClick.bind(this, book)} className="book-tr" key={book.volumeID}>
                     <td>{book.title}</td>
                     <td>{book.rating}</td>
+                    <td onClick={e => e.stopPropagation()}><EditBook book={book} activeList={this.state.activeList}/></td>
                 </tr>
             );
         });
@@ -88,7 +91,7 @@ class UserPage extends Component {
             <div className="container">
                 <div className="card">
                     <div className="card-body">
-                        <h3>{this.props.name}</h3>
+                        <h4>{this.props.name}</h4>
                         <span className="text-secondary">{this.props.email}</span><br></br>
                         <span className="text-secondary">Books: {booksRead}</span><br></br>
                         <span className="text-secondary"> (Completed: {completed.length}, Reading: {reading.length}, Planned: {planToRead.length})</span>
@@ -106,6 +109,7 @@ class UserPage extends Component {
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col">Rating</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>

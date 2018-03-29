@@ -16,6 +16,7 @@ exports.addBook = (req, res, next) => {
     const email = req.body.email;
     const status = req.body.status;
     let rating = req.body.rating;
+    rating = (rating === 'none') ? 0 : Number.parseInt(rating);
 
     // Update User's books
     // User will always exist since it is a requirement for addbook btn
@@ -35,18 +36,12 @@ exports.addBook = (req, res, next) => {
         User.findOneAndUpdate({ email: email }, {$push: {planToRead: newBook}}, err => {if (err) return next(err);});
     }
 
-
     Book.findOne({ volumeID: volumeID }, (err, existingBook) => {
         if (err) { return next(err); }
-        if (rating === 'none')
-            rating = 0;
-        else
-            rating = Number.parseInt(rating);
-
         // If book found --> Update Book stats if rating was left
         if (existingBook) {
             if (rating !== 0)
-                existingBook.totalUsers++;
+            existingBook.totalUsers++;
             existingBook.ratingSum += rating;
             existingBook.avgRating = existingBook.ratingSum / existingBook.totalUsers;
 
@@ -64,5 +59,54 @@ exports.addBook = (req, res, next) => {
 
             newBook.save( err => {if (err) return next(err);} );
         }
+    });
+};
+
+exports.updateBook = (req, res, next) => {
+    const volumeID = req.body.volumeID;
+    const title = req.body.title;
+    const email = req.body.email;
+    const status = req.body.status;
+    const oldStatus = req.body.activeList;
+    let rating = req.body.rating;
+    let oldRating = req.body.oldRating;
+
+    const newUserBook = {
+        title: title,
+        volumeID: volumeID,
+        rating: rating
+    };
+
+    console.log(volumeID, title, email, status, oldStatus, rating, oldRating);
+
+    // Updates book arrays on user
+    User.findOne({email: email}, (err, existingUser) => {
+        let newArr = existingUser[oldStatus].filter(book => {return book.volumeID !== volumeID;});
+        existingUser[oldStatus] = newArr.slice();
+        existingUser[status].push(newUserBook);
+        existingUser.save(err => {if (err) console.log(err);} );
+    });
+
+    // Updates book document itself
+    rating = (rating === 'none') ? 0 : Number.parseInt(rating);
+    oldRating = (oldRating === 'none') ? 0 : Number.parseInt(oldRating);
+
+    Book.findOne({ volumeID: volumeID }, (err, existingBook) => {
+        if (err) { return next(err); }
+
+        // Add new rating
+        if (rating !== 0) {
+            existingBook.totalUsers++;
+            existingBook.ratingSum += rating;
+        }
+        if (oldRating !== 0) {
+            existingBook.totalUsers--;
+            existingBook.ratingSum -= oldRating;
+        }
+
+        existingBook.avgRating = existingBook.ratingSum / existingBook.totalUsers;
+
+        existingBook.save( err => {if (err) return next(err);} );
+
     });
 };

@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { selectBook } from '../../actions';
+
 import BookListSearch from './BookListSearch';
 import BookListItem from './BookListItem';
 
 class BookList extends Component {
+    handleClick(book) {
+        this.props.selectBook(book);
+    }
+
     renderList() {
         if (this.props.books) {
             return this.props.books.map((book) => {
                 return (
-                    <li key={book.id} className="list-group-item book-list-item">
+                    <li key={book.id} onClick={this.handleClick.bind(this, book)} className="list-group-item book-list-item">
                         <BookListItem book={book} />
                     </li>
                 );
@@ -42,4 +48,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(BookList);
+export default connect(mapStateToProps, { selectBook })(BookList);

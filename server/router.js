@@ -12,4 +12,5 @@ module.exports = (app) => {
 
 	app.get('/getTopBooks', Book.getTopBooks);
 	app.post('/addBook', Book.addBook);
+	app.post('/updateBook', Book.updateBook);
 };
