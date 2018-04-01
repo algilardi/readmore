@@ -109,7 +109,7 @@ export function selectBookAPI(book) {
 	let {title} = book;
 	let terms = title.replace(/ /g, '+');
 	return function(dispatch) {
-		axios.get(`${BOOKS_URL}?q=${terms}&key=${API_KEY}&limit=10&printType=books&langRestrict=en&filter=ebooks`)
+		axios.get(`${BOOKS_URL}?q=${terms}&key=${API_KEY}&limit=1&printType=books&langRestrict=en&filter=ebooks`)
 		.then(response => {
 			dispatch({
 				type: BOOK_SELECT_API,
