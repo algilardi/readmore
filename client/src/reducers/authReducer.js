@@ -15,6 +15,7 @@ export default function(state = {}, action) {
 				planToRead: action.payload.planToRead || []
 			};
 		case UNAUTH_USER:
+			window.location.reload();
 			return { ...state, authenticated: false, name:'', email:''};
 		case AUTH_ERROR:
 			return {...state, error: action.payload };

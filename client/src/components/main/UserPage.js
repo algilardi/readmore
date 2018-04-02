@@ -87,44 +87,48 @@ class UserPage extends Component {
         let readingBtn = `col btn ${this.state.readingBtnClass}`;
         let planToReadBtn = `col btn ${this.state.planToReadBtnClass}`;
 
-        return (
-            <div className="container">
-                <div className="card">
-                    <div className="card-body">
-                        <h4>{this.props.name}</h4>
-                        <span className="text-secondary">{this.props.email}</span><br></br>
-                        <span className="text-secondary">Books: {booksRead}</span><br></br>
-                        <span className="text-secondary"> (Completed: {completed.length}, Reading: {reading.length}, Planned: {planToRead.length})</span>
-                    </div>
-                </div>
-                <div className="card mt-2">
-                    <div className="card-body">
-                        <div className="row pt-0 mt-0">
-                            <button className={completedBtn} onClick={this.completedClick.bind(this)}>Completed</button>
-                            <button className={readingBtn} onClick={this.readingClick.bind(this)}>Reading</button>
-                            <button className={planToReadBtn} onClick={this.planToReadClick.bind(this)}>Plan to Read</button>
+        if (this.props.authenticated) {
+            return (
+                <div className="container">
+                    <div className="card">
+                        <div className="card-body">
+                            <h4>{this.props.name}</h4>
+                            <span className="text-secondary">{this.props.email}</span><br></br>
+                            <span className="text-secondary">Books: {booksRead}</span><br></br>
+                            <span className="text-secondary"> (Completed: {completed.length}, Reading: {reading.length}, Planned: {planToRead.length})</span>
                         </div>
-                        <table className="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Rating</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderTbody()}
-                            </tbody>
-                        </table>
+                    </div>
+                    <div className="card mt-2">
+                        <div className="card-body">
+                            <div className="row pt-0 mt-0">
+                                <button className={completedBtn} onClick={this.completedClick.bind(this)}>Completed</button>
+                                <button className={readingBtn} onClick={this.readingClick.bind(this)}>Reading</button>
+                                <button className={planToReadBtn} onClick={this.planToReadClick.bind(this)}>Plan to Read</button>
+                            </div>
+                            <table className="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Rating</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.renderTbody()}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return <div></div>;
     }
 }
 
 function mapStateToProps(state) {
     return {
+        authenticated: state.auth.authenticated,
         name: state.auth.name,
         email: state.auth.email,
         completed: state.auth.completed,

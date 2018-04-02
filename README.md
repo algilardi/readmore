@@ -20,7 +20,6 @@
 *	Adding a date finished entry, to track books read month to month, year to year
 
 ## User Page
-*	On logout redirect away form editable user list
 *	Allow for list sorting (rating, date finished)
 *	Allow for entry editing (update rating and date finished)
 *	Google date picker for date finished
