@@ -89,31 +89,14 @@ export function selectBook(book){
 }
 
 export function selectBookAPI(book) {
-	/* Not working due to issue with Google API
 	const {volumeID} = book;
-	console.log(`${BOOKS_URL}/${volumeID}&key=${API_KEY}`)
 	return function(dispatch) {
-		axios.get(`${BOOKS_URL}/${volumeID}&key=${API_KEY}`)
+		axios.get(`${BOOKS_URL}/${volumeID}?key=${API_KEY}`)
 		.then(response => {
 			console.log(response);
 			dispatch({
 				type: BOOK_SELECT_API,
 				payload: response.data
-			});
-		})
-		.catch( ({response}) => {
-			dispatch({type: BOOK_ERROR});
-		});
-	};
-*/
-	let {title} = book;
-	let terms = title.replace(/ /g, '+');
-	return function(dispatch) {
-		axios.get(`${BOOKS_URL}?q=${terms}&key=${API_KEY}&limit=1&printType=books&langRestrict=en&filter=ebooks`)
-		.then(response => {
-			dispatch({
-				type: BOOK_SELECT_API,
-				payload: response.data.items[0]
 			});
 		})
 		.catch( ({response}) => {
