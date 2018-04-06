@@ -14,6 +14,7 @@ const BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes';
 const API_KEY = 'AIzaSyAj3oBqPRNQZCJSuOQVb8195Y3tnA62W-0';
 
 // User Auth
+// Log's in user and sets token
 export function loginUser({ email, password }, callback) {
 	return function(dispatch) {
 		// Submit email/pass to server
@@ -27,6 +28,7 @@ export function loginUser({ email, password }, callback) {
 				});
 				// - save JWT token
 				localStorage.setItem('token', response.data.token);
+				localStorage.setItem('email', response.data.email);
 				callback();
 			})
 			.catch(() => {
@@ -36,6 +38,7 @@ export function loginUser({ email, password }, callback) {
 	};
 }
 
+// Registers user and sets token
 export function registerUser({ email, name, password, confirmPassword }, callback) {
 	return function(dispatch) {
 		axios.post(`${API_URL}/register`, { email, name, password, confirmPassword })
@@ -45,6 +48,7 @@ export function registerUser({ email, name, password, confirmPassword }, callbac
 			 	payload: response.data
 			});
 			localStorage.setItem('token', response.data.token);
+			localStorage.setItem('email', response.data.email);
 			callback();
 		})
 		.catch( ({response}) => {
@@ -53,11 +57,14 @@ export function registerUser({ email, name, password, confirmPassword }, callbac
 	};
 }
 
+// Removes logged in token
 export function logoutUser() {
 	localStorage.removeItem('token');
+	localStorage.removeItem('email');
 	return { type: UNAUTH_USER };
 }
 
+// Clears login errors after subsequent attempts
 export function clearErrors() {
 	return { type: CLEAR_ERRORS };
 }
@@ -88,6 +95,7 @@ export function selectBook(book){
 	return { type: BOOK_SELECT, payload: book };
 }
 
+// Select book version used for clicking on a book in top/user list
 export function selectBookAPI(book) {
 	const {volumeID} = book;
 	return function(dispatch) {
@@ -116,9 +124,8 @@ export function updateBook({ volumeID, title}, email, status, rating, activeList
 	return {type: UPDATE_USER, payload: {status, volumeID, title, rating}};
 }
 
+// Used for when book is edited and needs to be removed
 export function removeBookFromState({volumeID}, activeList) {
-	console.log(volumeID, activeList);
-	console.log(REMOVE_BOOK_FROM_STATE);
 	return {type: REMOVE_BOOK_FROM_STATE, payload: {
 		volumeID: volumeID,
 		activeList: activeList

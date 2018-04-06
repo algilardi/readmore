@@ -2,7 +2,6 @@ import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, CLEAR_ERRORS, UPDATE_USER, REMOVE_B
 import { COMPLETED, READING, PLAN_TO_READ } from '../constants';
 
 export default function(state = {}, action) {
-	console.log(action.type);
 	switch(action.type) {
 		case AUTH_USER:
 			return { ...state,

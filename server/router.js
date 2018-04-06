@@ -9,6 +9,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 module.exports = (app) => {
 	app.post('/login', requireSignin, Auth.login);
 	app.post('/register', Auth.register);
+	app.get('/getData', Auth.getData);
 
 	app.get('/getTopBooks', Book.getTopBooks);
 	app.post('/addBook', Book.addBook);
