@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Modal from 'react-modal';
 
-import { removeBookFromState, updateBook } from '../../actions';
+import { removeBookFromState, updateBook, deleteBook } from '../../actions';
 
 Modal.setAppElement(document.querySelector('.mainContainer'));
 
@@ -31,6 +31,10 @@ class EditBook extends Component {
       this.props.removeBookFromState(this.props.book, this.props.activeList);
       this.props.updateBook(this.props.book, this.props.email, values.status, values.rating, this.props.activeList, this.props.book.rating);
       this.closeModal();
+  }
+
+  handleDelete(){
+      this.props.deleteBook(this.props.book, this.props.email, this.props.activeList, this.props.book.rating);
   }
 
   render() {
@@ -73,11 +77,16 @@ class EditBook extends Component {
       };
 
       return (
-          <div>
+          <div className="text-center">
               <button type="button"
                   onClick={this.openModal}
                   className="btn btn-outline-primary">
                   Edit
+              </button>&nbsp;
+              <button type="button"
+                  onClick={this.handleDelete.bind(this)}
+                  className="btn btn-outline-danger">
+                  Delete
               </button>
               <Modal
                   isOpen={this.state.modalIsOpen}
@@ -106,4 +115,4 @@ export default reduxForm({
         status: 'completed',
         rating: '1'
     }
-})(connect(mapStateToProps, { removeBookFromState, updateBook })(EditBook));
+})(connect(mapStateToProps, { removeBookFromState, updateBook, deleteBook })(EditBook));

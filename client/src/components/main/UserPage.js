@@ -66,8 +66,6 @@ class UserPage extends Component {
         else
             books = planToRead;
 
-        console.log(books);
-
         return books.map(book => {
             return (
                 <tr onClick={this.trClick.bind(this, book)} className="book-tr" key={book.volumeID}>

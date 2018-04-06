@@ -35,7 +35,6 @@ export default function(state = {}, action) {
 				return {...state, planToRead: [newBook, ...state.planToRead]};
 		case REMOVE_BOOK_FROM_STATE:
 			let { activeList, volumeID } = action.payload;
-			console.log('hello', action.payload);
 			let index;
 			if (activeList === COMPLETED) {
 				index = state.completed.map(book => {return book.volumeID;}).indexOf(volumeID);

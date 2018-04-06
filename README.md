@@ -1,22 +1,20 @@
 # TODO
 
+## General Coding Stuff
+*	Refactor code into helper functions where possible (esp on server)
+*	Make code prettier
+*	Better commenting
+
 ## User Authentication
-*	"Remember me" feature
 *	Signup confirmation email
 *	User profile editing
 	*	Password reset
 *	Signup with facebook
 
-## Book Search
-*	Fix retrieving books from top list/user list (inconsistent results with multiple books of the same name) - if only google could fix their API
-
 ## Book Display
 *	Amazon buy link
 
-## Add Book Form
-
 ## Book DB
-*	Deleting books
 *	Adding a date finished entry, to track books read month to month, year to year
 
 ## User Page

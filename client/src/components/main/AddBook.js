@@ -75,10 +75,6 @@ class AddBook extends Component {
         };
 
         if (this.props.authenticated) {
-            // console.log('completed',this.props.completed);
-            // console.log('reading',this.props.reading);
-            // console.log('planToRead',this.props.planToRead);
-
             if (this.props.completed.map(book => {return book.volumeID;}).indexOf(this.props.activeBook.id) !== -1)
                 return <div className="alert alert-secondary mb-0">You read this book</div>;
             if (this.props.reading.map(book => {return book.volumeID;}).indexOf(this.props.activeBook.id) !== -1)

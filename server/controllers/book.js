@@ -5,7 +5,10 @@ exports.getTopBooks = (req, res, next) => {
     let highestRatedBooks, mostPopularBooks;
     Book.find({}).sort({avgRating:-1}).limit(10).exec((err, highestBooks) => {
         Book.find({}).sort({totalUsers:-1}).limit(10).exec((err, popularBooks) => {
-            res.send({highestRatedBooks: highestBooks, mostPopularBooks: popularBooks});
+            res.send({
+                highestRatedBooks: highestBooks.filter(book => book.avgRating !== 0),
+                mostPopularBooks: popularBooks.filter(book => book.totalUsers !== 0)
+            });
         });
     });
 };
@@ -77,11 +80,9 @@ exports.updateBook = (req, res, next) => {
         rating: rating
     };
 
-    console.log(volumeID, title, email, status, oldStatus, rating, oldRating);
-
     // Updates book arrays on user
     User.findOne({email: email}, (err, existingUser) => {
-        let newArr = existingUser[oldStatus].filter(book => {return book.volumeID !== volumeID;});
+        let newArr = existingUser[oldStatus].filter(book => book.volumeID !== volumeID);
         existingUser[oldStatus] = newArr.slice();
         existingUser[status].push(newUserBook);
         existingUser.save(err => {if (err) console.log(err);} );
@@ -103,10 +104,39 @@ exports.updateBook = (req, res, next) => {
             existingBook.totalUsers--;
             existingBook.ratingSum -= oldRating;
         }
-
         existingBook.avgRating = existingBook.ratingSum / existingBook.totalUsers;
 
         existingBook.save( err => {if (err) return next(err);} );
 
+    });
+};
+
+exports.deleteBook = (req, res, next) => {
+    const volumeID = req.body.volumeID;
+    const title = req.body.title;
+    const email = req.body.email;
+    const activeList = req.body.activeList;
+    let rating = req.body.rating;
+    rating = (rating === 'none') ? 0 : Number.parseInt(rating);
+
+    // Updates book arrays on user
+    User.findOne({email: email}, (err, existingUser) => {
+        let newArr = existingUser[activeList].filter(book => {return book.volumeID !== volumeID;});
+        existingUser[activeList] = newArr.slice();
+        existingUser.save(err => {if (err) console.log(err);} );
+    });
+
+    // Updates rating on book
+    // Don't bother deleting a book with 0 users
+    Book.findOne({volumeID: volumeID}, (err, existingBook) => {
+        if (err) { return next(err); }
+
+        if (rating !== 0) {
+            existingBook.totalUsers--;
+            existingBook.ratingSum -= rating;
+        }
+
+        existingBook.avgRating = (existingBook.totalUsers === 0) ? 0 : existingBook.ratingSum / existingBook.totalUsers;
+        existingBook.save( err => {if (err) return next(err);} );
     });
 };

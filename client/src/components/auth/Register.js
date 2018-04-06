@@ -5,7 +5,6 @@ import { registerUser } from '../../actions';
 
 class Register extends Component {
 	handleFormSubmit(values) {
-		console.log(values);
 		this.props.registerUser(values, this.props.closeModal);
 	}
 

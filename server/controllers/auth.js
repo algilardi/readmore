@@ -63,9 +63,7 @@ exports.register = (req, res, next) => {
 };
 
 exports.getData = (req, res, next) => {
-	console.log(req.query);
 	const email = req.query.email;
-	console.log(email);
 	User.findOne({ email: email }, (err, existingUser) => {
 		if (err) {return next(err);}
 

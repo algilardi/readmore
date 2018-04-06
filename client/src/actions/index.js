@@ -124,7 +124,15 @@ export function updateBook({ volumeID, title}, email, status, rating, activeList
 	return {type: UPDATE_USER, payload: {status, volumeID, title, rating}};
 }
 
-// Used for when book is edited and needs to be removed
+export function deleteBook({volumeID, title}, email, activeList, rating) {
+	axios.post(`${API_URL}/deleteBook`, { volumeID, title, email, activeList, rating } );
+	return {type: REMOVE_BOOK_FROM_STATE, payload: {
+		volumeID: volumeID,
+		activeList: activeList
+	}};
+}
+
+// Used for when book is edited and needs to be removed before being readded in UPDATE_USER
 export function removeBookFromState({volumeID}, activeList) {
 	return {type: REMOVE_BOOK_FROM_STATE, payload: {
 		volumeID: volumeID,
