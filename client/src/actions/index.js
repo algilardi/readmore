@@ -6,10 +6,8 @@ import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, CLEAR_ERRORS, UPDATE_USER, REMOVE_B
 		ABOUT, TOPLIST, USER_PAGE,
 		BOOK_SEARCH, BOOK_EMPTY, BOOK_ERROR, BOOK_SELECT, BOOK_SELECT_API} from './types';
 
-import { COMPLETED, READING, PLAN_TO_READ } from '../constants';
+import { COMPLETED, READING, PLAN_TO_READ, API_URL } from '../constants';
 
-
-const API_URL = 'http://localhost:3090';
 const BOOKS_URL = 'https://www.googleapis.com/books/v1/volumes';
 const API_KEY = 'AIzaSyAj3oBqPRNQZCJSuOQVb8195Y3tnA62W-0';
 

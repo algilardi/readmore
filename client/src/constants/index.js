@@ -9,3 +9,5 @@ export const POPULAR = 'Most Popular';
 export const COMPLETED = 'completed';
 export const READING = 'reading';
 export const PLAN_TO_READ = 'planToRead';
+
+export const API_URL = 'http://localhost:3090';

@@ -23,10 +23,12 @@ class TopList extends Component {
     renderTbody(highest) {
         let books = highest ? this.props.highestRatedBooks : this.props.mostPopularBooks;
         return books.map(book => {
+            let rating = (book.avgRating % 1 === 0) ? book.avgRating : book.avgRating.toFixed(2);
+
             return (
                 <tr onClick={this.trClick.bind(this, book)} className="book-tr" key={book.volumeID}>
                     <td >{book.title}</td>
-                    {highest ? <td>{book.avgRating} / 5</td> : <td>{book.totalUsers}</td>}
+                    {highest ? <td>{rating} / 5</td> : <td>{book.totalUsers}</td>}
                 </tr>
             );
         });
